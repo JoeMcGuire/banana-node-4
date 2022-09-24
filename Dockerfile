@@ -20,7 +20,7 @@ RUN pip3 install -r requirements.txt
 
 # We add the banana boilerplate here
 ADD server.py .
-#ADD server.mjs .
+ADD server.mjs .
 EXPOSE 8000
 
 # Add your huggingface auth key here
@@ -34,6 +34,6 @@ ADD download.py .
 # Add your custom app code, init() and inference()
 ADD app.py .
 
-CMD python3 -u server.py
+#CMD python3 -u server.py
 
-#CMD node server.mjs
+CMD node server.mjs
