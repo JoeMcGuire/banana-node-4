@@ -20,8 +20,10 @@ RUN pip3 install -r requirements.txt
 
 # We add the banana boilerplate here
 ADD server.py .
-ADD server.mjs .
 EXPOSE 8000
+ADD server.mjs .
+EXPOSE 8001
+
 
 # Add your huggingface auth key here
 ENV HF_AUTH_TOKEN=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
