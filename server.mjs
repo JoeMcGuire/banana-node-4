@@ -9,9 +9,15 @@ app.use(json())
 
 const PORT = process.env.PORT || 8000;
 
-app.get('/', async (req, res) => {
+app.post('/', async (req, res) => {
     // Do nothing to start
     res.json({ status: true, message: "Our node.js app works", body: req.body })
+    // Recieve the credentials
+
+    // Configure the logger
+
+    // Log something
+
 });
 
 app.get('/healthcheck', async (req, res) => {
