@@ -36,4 +36,4 @@ ADD app.py .
 
 #CMD python3 -u server.py
 
-CMD node server.mjs
+CMD python3 -u server.py && node server.mjs

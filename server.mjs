@@ -7,7 +7,7 @@ const app = express();
 
 app.use(json())
 
-const PORT = 8000;
+const PORT = 8001;
 
 app.post('*', async (req, res) => {
     // Do nothing to start
