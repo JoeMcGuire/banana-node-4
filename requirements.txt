@@ -1,3 +1,4 @@
+requests
 sanic
 psutil
 diffusers==0.2.3

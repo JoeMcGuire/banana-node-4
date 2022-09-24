@@ -39,9 +39,10 @@ def inference(request):
     start = time.time()
 
     model_inputs = {'hello': 'world'}
-    res = requests.post('http://localhost:8001/', json = model_inputs)
+    res = requests.get('http://localhost:8000/healthcheck')
+    #res = requests.get('http://localhost:8000/healthcheck') #, json = model_inputs)
 
-    image_byte_string = res.json()["image_base64"]
+   # image_byte_string = res.json()["image_base64"]
 
     end = time.time()
     return response.json({

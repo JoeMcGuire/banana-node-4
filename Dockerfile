@@ -12,11 +12,11 @@ ADD requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 # Install node
-#RUN apt-get install -y nodejs
-#RUN apt-get install -y curl
-#RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-#RUN apt-get install -y nodejs
-#COPY ./node_modules ./node_modules
+RUN apt-get install -y nodejs
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+COPY ./node_modules ./node_modules
 
 # We add the banana boilerplate here
 ADD server.py .
@@ -38,4 +38,4 @@ ADD app.py .
 
 #CMD python3 -u server.py
 
-CMD python3 -u server.py && node server.mjs
+CMD node server.mjs & python3 -u server.py
