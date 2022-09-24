@@ -1,4 +1,5 @@
 from sanic import Sanic, response
+import requests
 import subprocess
 import platform
 import psutil
@@ -37,12 +38,10 @@ def inference(request):
     executionCount += 1;
     start = time.time()
 
-    try:
-        model_inputs = response.json.loads(request.json)
-    except:
-        model_inputs = request.json
+    model_inputs = {'hello': 'world'}
+    res = requests.post('http://localhost:8001/', json = model_inputs)
 
-    #output = user_src.inference(model_inputs)
+    image_byte_string = res.json()["image_base64"]
 
     end = time.time()
     return response.json({
@@ -53,7 +52,7 @@ def inference(request):
         "InitTime": round(initTime),
         "ExecutionTime": round(end - start),
         "ExecutionCount": executionCount,
-       # "output": output,
+        "output": res.json(),
     })
 
 
