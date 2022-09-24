@@ -1,0 +1,5 @@
+sanic
+psutil
+diffusers==0.2.3
+transformers
+scipy
