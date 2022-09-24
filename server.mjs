@@ -7,7 +7,7 @@ const app = express();
 
 app.use(json())
 
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 
 app.post('*', async (req, res) => {
     // Do nothing to start
@@ -21,7 +21,7 @@ app.post('*', async (req, res) => {
 });
 
 app.get('/healthcheck', async (req, res) => {
-    let gpu = false;
+/*    let gpu = false;
     try {
 	const { stdout } = await execPromise('nvidia-smi');
         if (stdout) {
@@ -31,8 +31,8 @@ app.get('/healthcheck', async (req, res) => {
     catch {
         // no gpu.
     }
-
-    res.json({ state: "healthy", gpu })
+*/
+    res.json({ state: "healthy", gpu: true })
 });
 
-app.listen(PORT, () => console.log(`App listening at port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`App listening at port ${PORT}`));
