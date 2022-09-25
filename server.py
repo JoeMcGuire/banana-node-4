@@ -11,7 +11,7 @@ initStart = time.time()
 
 retryRequest = requests.Session()
 retries = Retry(connect=25,
-                backoff_factor=0.1)
+                backoff_factor=0.2)
 retryRequest.mount('http://', HTTPAdapter(max_retries=retries))
 init = retryRequest.get('http://localhost:8003/init')
 
