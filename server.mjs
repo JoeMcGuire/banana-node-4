@@ -5,10 +5,10 @@ const execPromise = util.promisify(exec);
 
 const app = express();
 const server = "node/express";
-const version = "try catch";
+const version = "node server first";
 app.use(json())
 
-const PORT = 8001;
+const PORT = 8000;
 
 app.post('/', async (req, res) => {
     process.on('uncaughtException', function(err) {
