@@ -38,17 +38,24 @@ def inference(request):
     executionCount += 1;
     start = time.time()
 
-    model_inputs = {'hello': 'world'}
+    #model_inputs = {'hello': 'world'}
     payload = request.json
-    res = requests.post('http://localhost:8001/', json = payload)
-    #res = requests.get('http://localhost:8000/healthcheck') #, json = model_inputs)
 
+    try:
+        res = requests.post('http://localhost:8001/', json = payload)
+        #res = requests.get('http://localhost:8001/healthcheck') #, json = model_inputs)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        return response.json({
+            "error": "something went wrong with proxy",
+            "e": e,
+        })
+        raise SystemExit(e)
    # image_byte_string = res.json()["image_base64"]
 
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "passing command and arguments",
+        "version": "try catch",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
