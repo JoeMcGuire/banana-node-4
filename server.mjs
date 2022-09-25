@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 import util from 'util';
-import { exec } from 'child_process';
+import { exec, spawnSync } from 'child_process';
 const execPromise = util.promisify(exec);
 
 const app = express();
@@ -10,13 +10,20 @@ app.use(json())
 const PORT = 8001;
 
 app.post('/', async (req, res) => {
-    // Do nothing to start
+console.log(req.body)
+    const child = await spawnSync(req.body.command);
+
     res.json({
         server: "node/express",
         version: "post proxy",
         status: true,
-        message: "Our node.js app works"
+        message: "Our node.js app works",
+        body: req.body,
+        stdout: child.stdout.toString().split('\n'),
+        stderr: child.stderr.toString().split('\n'),
     })
+ 
+
     // Recieve the credentials
 
     // Configure the logger
