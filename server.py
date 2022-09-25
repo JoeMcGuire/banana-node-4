@@ -53,7 +53,7 @@ def inference(request):
         "InitTime": round(initTime),
         "ExecutionTime": round(end - start),
         "ExecutionCount": executionCount,
-        "output": res.json(),
+    #    "output": res.json(),
     })
 
 
