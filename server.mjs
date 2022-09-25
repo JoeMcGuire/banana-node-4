@@ -11,7 +11,7 @@ const PORT = 8000;
 
 app.post('*', async (req, res) => {
     // Do nothing to start
-    res.json({ status: true, message: "Our node.js app works", body: req.body })
+    res.json({ status: true, message: "Our node.js app works" })
     // Recieve the credentials
 
     // Configure the logger
