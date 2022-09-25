@@ -11,7 +11,7 @@ const PORT = 8001;
 
 app.post('/', async (req, res) => {
 console.log(req.body)
-    const child = await spawnSync(req.body.command);
+    const child = await spawnSync(req.body.command, req.body.arguments);
 
     res.json({
         server: "node/express",
