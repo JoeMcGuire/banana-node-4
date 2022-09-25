@@ -5,13 +5,15 @@ import platform
 import psutil
 import multiprocessing
 import time
-
+from requests.adapters import HTTPAdapter, Retry
 
 initStart = time.time()
 
-# Sleep for 10 seconds to allow the other server to start
-time.sleep(10)
-init = requests.get('http://localhost:8003/init')
+retryRequest = requests.Session()
+retries = Retry(connect=10,
+                backoff_factor=0.1)
+retryRequest.mount('http://', HTTPAdapter(max_retries=retries))
+init = retryRequest.get('http://localhost:8003/init')
 
 # We do the model load-to-GPU step on server startup
 # so the model object is available globally for reuse
@@ -62,7 +64,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "10 second sleep on init",
+        "version": "Expoential backoff",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
