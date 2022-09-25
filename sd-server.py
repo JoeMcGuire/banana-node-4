@@ -8,16 +8,14 @@ import time
 
 initStart = time.time()
 
-# Create the http server app
-server = Sanic("sd_server")
-
-
 import app as user_src
 
 # We do the model load-to-GPU step on server startup
 # so the model object is available globally for reuse
 user_src.init()
 
+# Create the http server app
+server = Sanic("sd_server")
 
 # Inference POST handler at '/' is called for every http call from Banana
 @server.route('/', methods=["POST"]) 
