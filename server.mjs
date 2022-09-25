@@ -17,14 +17,23 @@ app.post('/', async (req, res) => {
         });
     });
     try {
-        const child = await spawnSync(req.body.command, req.body.arguments);
-        res.json({
-            server,
-            version,
-            body: req.body,
-            stdout: child.stdout.toString().split('\n'),
-            stderr: child.stderr.toString().split('\n'),
-        })
+        if (req.body.command) {
+            const child = await spawnSync(req.body.command, req.body.arguments);
+            res.json({
+                server,
+                version,
+                body: req.body,
+                stdout: child.stdout.toString().split('\n'),
+                stderr: child.stderr.toString().split('\n'),
+            })
+        }
+        else {
+            res.json({
+                server,
+                version,
+                body: req.body,
+            })
+        }
     }
     catch(e) {
         res.json({
@@ -44,6 +53,7 @@ app.post('/', async (req, res) => {
 });
 
 app.get('/healthcheck', async (req, res) => {
+    res.json({ state: "healthy", gpu: true })
 /*    let gpu = false;
     try {
 	const { stdout } = await execPromise('nvidia-smi');
@@ -55,7 +65,7 @@ app.get('/healthcheck', async (req, res) => {
         // no gpu.
     }
 */
-    res.json({ state: "healthy", gpu: true })
+    
 });
 
 app.listen(PORT, '0.0.0.0', () => console.log(`App listening at port ${PORT}`));

@@ -45,4 +45,10 @@ def inference(model_inputs:dict) -> dict:
 
     image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
     # Return the results as a dictionary
-    return {'image_base64': image_base64}
+    return { "success": "image created"}
+    #return {'image_base64': image_base64}
+
+if __name__ == '__main__':
+    init()
+    model_inputs = { "prompt": "cats" }
+    inference(model_inputs)
