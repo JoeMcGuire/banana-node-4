@@ -9,11 +9,11 @@ app.use(json())
 
 const PORT = 8001;
 
-app.post('*', async (req, res) => {
+app.post('/', async (req, res) => {
     // Do nothing to start
     res.json({
         server: "node/express",
-        version: "Server context",
+        version: "post proxy",
         status: true,
         message: "Our node.js app works"
     })

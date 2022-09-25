@@ -39,7 +39,7 @@ def inference(request):
     start = time.time()
 
     model_inputs = {'hello': 'world'}
-    res = requests.get('http://localhost:8001/healthcheck')
+    res = requests.post('http://localhost:8001/', model_inputs)
     #res = requests.get('http://localhost:8000/healthcheck') #, json = model_inputs)
 
    # image_byte_string = res.json()["image_base64"]
@@ -47,7 +47,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "Server context",
+        "version": "post proxy",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
