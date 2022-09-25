@@ -46,7 +46,8 @@ def inference(request):
 
     end = time.time()
     return response.json({
-        "message": "hello world",
+        "server": "python/sanic",
+        "version": "Server context",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
@@ -58,4 +59,4 @@ def inference(request):
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port="8001", workers=1)
+    server.run(host='0.0.0.0', port="8000", workers=1)

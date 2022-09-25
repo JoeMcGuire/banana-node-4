@@ -7,11 +7,16 @@ const app = express();
 
 app.use(json())
 
-const PORT = 8000;
+const PORT = 8001;
 
 app.post('*', async (req, res) => {
     // Do nothing to start
-    res.json({ status: true, message: "Our node.js app works" })
+    res.json({
+        server: "node/express",
+        version: "Server context",
+        status: true,
+        message: "Our node.js app works"
+    })
     // Recieve the credentials
 
     // Configure the logger
