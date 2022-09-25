@@ -43,7 +43,8 @@ def inference(request):
         payload = request.json
 
     command = payload.get('command', None)
-    if command == None:
+    prompt = payload.get('prompt', None)
+    if ((command == None) and (prompt == None)):
         return response.json({'message': "No command provided"})
 
     try:
