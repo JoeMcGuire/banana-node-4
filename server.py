@@ -37,9 +37,14 @@ def inference(request):
     global executionCount;
     executionCount += 1;
     start = time.time()
+    try:
+        payload = response.json.loads(request.json)
+    except:
+        payload = request.json
 
-    #model_inputs = {'hello': 'world'}
-    payload = request.json
+    command = payload.get('command', None)
+    if command == None:
+        return response.json({'message': "No command provided"})
 
     try:
         res = requests.post('http://localhost:8001/', json = payload, timeout=120)
@@ -54,7 +59,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "new 120 sec timeout and ability to run python app.py",
+        "version": "python first, more safety",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
@@ -66,4 +71,4 @@ def inference(request):
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port="8001", workers=1)
+    server.run(host='0.0.0.0', port="8000", workers=1)

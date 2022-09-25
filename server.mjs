@@ -8,7 +8,7 @@ const server = "node/express";
 const version = "node server first";
 app.use(json())
 
-const PORT = 8000;
+const PORT = 8001;
 
 app.post('/', async (req, res) => {
     process.on('uncaughtException', function(err) {
