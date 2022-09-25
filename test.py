@@ -9,7 +9,7 @@ from PIL import Image
 model_inputs = {'prompt': 'realistic field of grass', 'command': 'ls', 'arguments': ['-lah']}
 
 res = requests.post('http://localhost:8000/', json = model_inputs)
-
+res2 = requests.post('http://localhost:8000/', json = model_inputs)
 image_byte_string = res.json()["image_base64"]
 
 image_encoded = image_byte_string.encode('utf-8')
