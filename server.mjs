@@ -1,6 +1,7 @@
 import express, { json } from 'express';
 import util from 'util';
 import { exec, spawnSync } from 'child_process';
+import fetch from 'node-fetch';
 const execPromise = util.promisify(exec);
 
 const app = express();
@@ -19,7 +20,7 @@ app.post('/', async (req, res) => {
     try {
         if (req.body.command) {
             const child = await spawnSync(req.body.command, req.body.arguments);
-            res.json({
+            return res.json({
                 server,
                 version,
                 body: req.body,
@@ -27,8 +28,21 @@ app.post('/', async (req, res) => {
                 stderr: child.stderr.toString().split('\n'),
             })
         }
+        else if (req.body.prompt) {
+            const response = await fetch("http://localhost:8003", {
+                method: 'POST',
+                body: JSON.stringify(req.body),
+            });
+
+            return res.json({
+                server,
+                version,
+                body: req.body,
+                out: await response.json(),
+            })
+        }
         else {
-            res.json({
+            return res.json({
                 server,
                 version,
                 body: req.body,
