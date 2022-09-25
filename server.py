@@ -9,7 +9,8 @@ import time
 
 initStart = time.time()
 
-#import app as user_src
+# Sleep for 10 seconds to allow the other server to start
+time.sleep(10)
 init = requests.get('http://localhost:8003/init')
 
 # We do the model load-to-GPU step on server startup
@@ -61,7 +62,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "Returning base64 image",
+        "version": "10 second sleep on init",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),

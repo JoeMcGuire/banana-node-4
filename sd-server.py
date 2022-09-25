@@ -10,8 +10,6 @@ initStart = time.time()
 
 import app as user_src
 
-
-
 # Create the http server app
 server = Sanic("sd_server")
 
@@ -27,6 +25,8 @@ def init(request):
 # Inference POST handler at '/' is called for every http call from Banana
 @server.route('/', methods=["POST"]) 
 def inference(request):
+    #job = { "job": "done" }
+    #return response.json(job)
     try:
         model_inputs = response.json.loads(request.json)
     except:
