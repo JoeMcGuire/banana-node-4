@@ -48,7 +48,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "post proxy",
+        "version": "passing command",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
