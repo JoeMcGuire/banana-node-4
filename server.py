@@ -10,6 +10,7 @@ import time
 initStart = time.time()
 
 #import app as user_src
+init = requests.get('http://localhost:8003/init')
 
 # We do the model load-to-GPU step on server startup
 # so the model object is available globally for reuse
