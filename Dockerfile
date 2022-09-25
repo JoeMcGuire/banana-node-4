@@ -36,6 +36,6 @@ ADD download.py .
 # Add your custom app code, init() and inference()
 ADD app.py .
 
-#CMD python3 -u server.py
+CMD python3 -u server.py
 
-CMD node server.mjs & python3 -u server.py
+#CMD node server.mjs & python3 -u server.py
