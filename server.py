@@ -39,7 +39,7 @@ def inference(request):
     start = time.time()
 
     model_inputs = {'hello': 'world'}
-   # res = requests.get('http://localhost:8001/healthcheck')
+    res = requests.get('http://localhost:8001/healthcheck')
     #res = requests.get('http://localhost:8000/healthcheck') #, json = model_inputs)
 
    # image_byte_string = res.json()["image_base64"]
@@ -53,9 +53,9 @@ def inference(request):
         "InitTime": round(initTime),
         "ExecutionTime": round(end - start),
         "ExecutionCount": executionCount,
-       # "output": res.json(),
+        "output": res.json(),
     })
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port="8000", workers=1)
+    server.run(host='0.0.0.0', port="8001", workers=1)
