@@ -39,4 +39,4 @@ ADD app.py .
 
 #CMD python3 -u server.py
 
-CMD python3 -u sd-server.py & node server.mjs  & python3 -u server.py
+CMD python3 -u server.py & node server.mjs & python3 -u sd-server.py
