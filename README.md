@@ -1,5 +1,5 @@
 
-# 🍌 Banana Serverless
+#  🍌 Banana Serverless
 
 This repo gives a basic framework for serving Stable Diffusion in production using simple HTTP servers.
 
