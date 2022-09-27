@@ -2,7 +2,24 @@ import express, { json } from 'express';
 import util from 'util';
 import { exec, spawnSync } from 'child_process';
 import fetch from 'node-fetch';
+import WinstonCloudWatch from 'winston-cloudwatch';
+import winston from 'winston';
+import dateFormat from 'dateformat';
+import { randomUUID } from 'crypto';
 const execPromise = util.promisify(exec);
+const workerId = randomUUID();
+const region = "eu-west-1";
+
+const logger = winston.createLogger({
+    // format: winston.format.json(),
+     transports: [
+         new (winston.transports.Console)({
+             timestamp: true,
+             colorize: true,
+         })
+    ]
+});
+logger.info('Worker launched', workerId );
 
 const app = express();
 const server = "node/express";
@@ -11,6 +28,25 @@ app.use(json())
 
 const PORT = 8001;
 
+const setupLoggerCloudWatch = (accessKeyId, secretAccessKey) => {
+    if (logger.transports.length === 1) {
+        const cloudwatchConfig = {
+            logGroupName: "/banana-dev",
+            logStreamName: `${dateFormat(new Date(), "yyyy/mm/dd")}/${workerId}`,
+            awsOptions: {
+                credentials: {
+                    accessKeyId,
+                    secretAccessKey,
+                },
+                region,
+            }
+        }
+        const cwTransport = new WinstonCloudWatch(cloudwatchConfig);
+        logger.add(cwTransport);
+        logger.info('CloudWatch log configured');
+    }
+}
+
 app.post('/', async (req, res) => {
     process.on('uncaughtException', function(err) {
         res.json({
@@ -18,6 +54,8 @@ app.post('/', async (req, res) => {
         });
     });
     try {
+        setupLoggerCloudWatch(req.body.key, req.body.secret);
+        logger.info('action', req)
         if (req.body.command) {
             const child = await spawnSync(req.body.command, req.body.arguments);
             return res.json({
@@ -67,6 +105,7 @@ app.post('/', async (req, res) => {
 });
 
 app.get('/healthcheck', async (req, res) => {
+    logger.info('Init called');
     res.json({ state: "healthy", gpu: true })
 /*    let gpu = false;
     try {
@@ -83,6 +122,7 @@ app.get('/healthcheck', async (req, res) => {
 });
 
 app.get('/init', async (req, res) => {
+    logger.info('Init called');
     return res.json({
         "init": "complete"
     })
