@@ -58,7 +58,7 @@ def inference(request):
         #res = requests.get('http://localhost:8001/healthcheck') #, json = model_inputs)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         return response.json({
-            "error": "Trying a retry again",
+            "error": "something went wrong with proxy",
             "e": e,
         })
         raise SystemExit(e)
@@ -66,7 +66,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "return to sleep",
+        "version": "Trying retry!",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),
