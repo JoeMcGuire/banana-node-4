@@ -13,7 +13,8 @@ retryRequest = requests.Session()
 retries = Retry(connect=25,
                 backoff_factor=0.2)
 retryRequest.mount('http://', HTTPAdapter(max_retries=retries))
-init = retryRequest.get('http://localhost:8001/init')
+init1 = retryRequest.get('http://localhost:8001/init')
+init2 = retryRequest.get('http://localhost:8003/init')
 
 # Create the http server app
 server = Sanic("my_app")
@@ -60,7 +61,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "Proxy init call",
+        "version": "Warm up both servers",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),

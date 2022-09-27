@@ -10,6 +10,12 @@ initStart = time.time()
 
 import app as user_src
 
+# dependency free way to check if GPU is visible
+gpu = False
+out = subprocess.run("nvidia-smi", shell=True)
+if out.returncode == 0: # success state on shell command
+    gpu = True
+
 # Create the http server app
 server = Sanic("sd_server")
 
@@ -18,15 +24,18 @@ server = Sanic("sd_server")
 def init(request):
     # We do the model load-to-GPU step on server startup
     # so the model object is available globally for reuse
-    user_src.init()
+    if gpu == True:
+        user_src.init()
     return response.json({"status": "success"})
 
 
 # Inference POST handler at '/' is called for every http call from Banana
 @server.route('/', methods=["POST"]) 
 def inference(request):
-    #job = { "job": "done" }
-    #return response.json(job)
+    if gpu == False:
+        failResponse = { "message": "no gpu available" }
+        return response.json(failResponse)
+
     try:
         model_inputs = response.json.loads(request.json)
     except:
