@@ -9,17 +9,11 @@ from requests.adapters import HTTPAdapter, Retry
 
 initStart = time.time()
 
-
-#time.sleep(20)
 retryRequest = requests.Session()
 retries = Retry(connect=25,
                 backoff_factor=0.2)
 retryRequest.mount('http://', HTTPAdapter(max_retries=retries))
 init = retryRequest.get('http://localhost:8003/init')
-#init = requests.get('http://localhost:8003/init')
-# We do the model load-to-GPU step on server startup
-# so the model object is available globally for reuse
-#user_src.init()
 
 # Create the http server app
 server = Sanic("my_app")
@@ -66,7 +60,7 @@ def inference(request):
     end = time.time()
     return response.json({
         "server": "python/sanic",
-        "version": "Trying retry!",
+        "version": "Re order download",
         "CpuArchitecture": platform.processor(),
         "MemoryGb": round(psutil.virtual_memory().total / (1024.0 ** 3)),
         "CpuCores": multiprocessing.cpu_count(),

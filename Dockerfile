@@ -11,6 +11,14 @@ RUN pip3 install --upgrade pip
 ADD requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
+# Add your huggingface auth key here
+ENV HF_AUTH_TOKEN=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
+
+# Add your model weight files
+# (in this case we have a python script)
+ADD download.py .
+RUN python3 download.py
+
 # Install node
 RUN apt-get install -y nodejs
 RUN apt-get install -y curl
@@ -25,14 +33,6 @@ ADD server.mjs .
 EXPOSE 8001
 ADD sd-server.py .
 EXPOSE 8003
-
-# Add your huggingface auth key here
-ENV HF_AUTH_TOKEN=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
-
-# Add your model weight files
-# (in this case we have a python script)
-ADD download.py .
-RUN python3 download.py
 
 # Add your custom app code, init() and inference()
 ADD app.py .
