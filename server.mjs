@@ -82,4 +82,11 @@ app.get('/healthcheck', async (req, res) => {
     
 });
 
+app.get('/init', async (req, res) => {
+    await fetch("http://localhost:8003/init");
+    return res.json({
+        "init": "complete"
+    })
+});
+
 app.listen(PORT, '0.0.0.0', () => console.log(`App listening at port ${PORT}`));
